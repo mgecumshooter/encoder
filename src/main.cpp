@@ -1,11 +1,16 @@
+// Include
 #include <iostream>
 #include <string>
 #include <sstream>
 #include <stack>
+// There's only standart library :sunglasses:
 using namespace std;
 
+// All English alphabet
 string ALPHABET = "abcdefghijklmnopqrstuvwxyz ";
 
+
+// This shit converts characters to lowercase
 void toLowerCase(string& s) {
     for (char &c : s) {
         if (c >= 'A' && c <= 'Z') {
@@ -16,6 +21,7 @@ void toLowerCase(string& s) {
     }
 }
 
+// This shit finds character position in alphabet
 int alphPos (char c){
     int pos;
 
@@ -30,6 +36,7 @@ int alphPos (char c){
     return pos;
 }
 
+// This shit takes the key and adjustes it to the lenght of string
 void doKey(string c, string& key){
     while (c.size() != key.size()){
         if (c.size() > key.size()){
@@ -41,6 +48,8 @@ void doKey(string c, string& key){
         }
     }
 }
+
+// This shit takes the string and the key and encodes it
 string encode(string word, string key){
     toLowerCase(word);
     toLowerCase(key);
@@ -52,6 +61,7 @@ string encode(string word, string key){
     return enc;
 }
 
+// This shit doeas the main shit. shit.
 int main(){
     string penis, key;
     getline(cin, penis);
