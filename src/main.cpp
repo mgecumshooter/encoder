@@ -62,6 +62,7 @@ string encode(string word, string key){
     return enc;
 }
 
+// This Shit takes encoded string and dekodes it
 string decode(string word, string key){
     string dec;
     toLowerCase(word);
@@ -79,7 +80,9 @@ string decode(string word, string key){
 
 // This shit doeas the main shit. shit.
 int main(int argc, char *argv[]){
+    // String of all possible arguments
     string argus[] = {"-e", "-d", "-h"};
+    // Parsing the arguments
     if (argc > 1){
         if (argv[1] == argus[0]){
             cout << encode(argv[2], argv[3]);
