@@ -1,2 +1,2 @@
 # encoder
-Very basic Vizhener encoder writen in c++
+Very basic Vigener encoder writen in c++
