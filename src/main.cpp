@@ -78,10 +78,17 @@ string decode(string word, string key){
 }
 
 // This shit doeas the main shit. shit.
-int main(){
-    string penis, key;
-    getline(cin, penis);
-    getline(cin, key);
-    cout << encode(penis, key) << endl;
-    cout << decode(encode(penis, key), key);
+int main(int argc, char *argv[]){
+    string argus[] = {"-e", "-d", "-h"};
+    if (argc > 1){
+        if (argv[1] == argus[0]){
+            cout << encode(argv[2], argv[3]);
+        }else if (argv[1] == argus[1]){
+            cout << decode(argv[2], argv[3]);
+        }else if (argv[1] == argus[2]){
+            cout << "Usage ./exec [-h,-e,-d] \"string\" \"key\"\n./exec -e \"string\" \"key\" - encode sting with key\n./exec -d \"string\" \"key\" - decode string using key\n./exec -h - show this help and exit";
+        }
+    }else {
+        cout << "Invalid argument! use ./exec -h to see usage";
+    }
 }
