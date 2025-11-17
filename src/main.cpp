@@ -3,6 +3,7 @@
 #include <string>
 #include <sstream>
 #include <stack>
+#include <cmath>
 // There's only standart library :sunglasses:
 using namespace std;
 
@@ -54,11 +55,26 @@ string encode(string word, string key){
     toLowerCase(word);
     toLowerCase(key);
     doKey(word, key);
-    string enc = "";
+    string enc;
     for (int i = 0; i < word.size(); i++){
-        enc += ALPHABET[(alphPos(word[i]) + alphPos(key[i])) % 26];
+        enc += ALPHABET[(alphPos(word[i]) + alphPos(key[i])) % 27];
     }
     return enc;
+}
+
+string decode(string word, string key){
+    string dec;
+    toLowerCase(word);
+    toLowerCase(key);
+    doKey(word, key);
+    for (int i = 0; i != word.length(); i++){
+        if (alphPos(word[i]) >= alphPos(key[i])){
+            dec += ALPHABET[(alphPos(word[i]) - alphPos(key[i])) % 27];
+        } else {
+            dec += ALPHABET[(27 - (alphPos(key[i]) - alphPos(word[i]))) % 27];
+        }
+    }
+    return dec;
 }
 
 // This shit doeas the main shit. shit.
@@ -66,5 +82,6 @@ int main(){
     string penis, key;
     getline(cin, penis);
     getline(cin, key);
-    cout << encode(penis, key);
+    cout << encode(penis, key) << endl;
+    cout << decode(encode(penis, key), key);
 }
