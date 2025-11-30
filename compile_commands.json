@@ -1,0 +1,14 @@
+[
+  {
+    "arguments": [
+      "/usr/sbin/g++",
+      "-c",
+      "-o",
+      "build/main",
+      "src/main.cpp"
+    ],
+    "directory": "/home/deymon/Documents/cpp-projects/encoder",
+    "file": "/home/deymon/Documents/cpp-projects/encoder/src/main.cpp",
+    "output": "/home/deymon/Documents/cpp-projects/encoder/build/main"
+  }
+]
