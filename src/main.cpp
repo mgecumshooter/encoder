@@ -39,13 +39,50 @@ bool isCap (char c, string alph){
 	return cap;	
 }
 
-int alphPos(char c, string alph){
-	int pos;
-	if (alph == "en"){
-		for (int i, i <= capAlph_en, i++){
+
+// takes character, alphabet and caps, then finds character position in the specified alphabet
+int alphPos(char c, string alph, int cap){
+	cout << "\n\t";
+	cout << "DEBUG: c - " << c << "\n\t";
+	cout << "DEBUG: alph - " << alph << "\n\t";
+	cout << "DEBUG: cap - " << cap << endl;
+	int pos = -1;
+	// check alph
+	if (alph == "en" && cap == 1){ // iterate trough cap en alphabet
+		for (int i = 0; i < capAlph_en.length(); i++){
 			if (c != capAlph_en[i]){
 				continue;
-			}else if (c == capAlph_en)
+			}else if (c == capAlph_en[i]){
+				pos = i;
+				break;
+			}
+		}
+	}else if(alph == "en"){ // same as previous, but without caps
+		for (int i = 0; i < alph_en.length(); i++){
+			if (c != alph_en[i]){
+				continue;
+			}else if (c == alph_en[i]){
+				pos = i;
+				break;
+			}
+		}
+	}else if (alph == "ru" && cap == 1){ // iterate trough cap ru alphabet
+		for (int i = 0; i < capAlph_ru.length(); i++){
+			if (c != capAlph_ru[i]){
+				continue;
+			}else if (c == capAlph_ru[i]){
+				pos = i;
+				break;
+			}
+		}
+	}else if(alph == "ru"){ // same as previous, but without caps
+		for (int i = 0; i < alph_ru.length(); i++){
+			if (c != alph_ru[i]){
+				continue;
+			}else if (c == alph_ru[i]){
+				pos = i;
+				break;
+			}
 		}
 	}
 	return pos;
@@ -137,5 +174,6 @@ int main(/*int argc, char *argv[]*/){
 	char penis;
 	string alph;
 	cin >> penis >> alph;
-	cout << "DEBUG:\n" << isCap(penis, alph);
+	cout << "DEBUG: " << isCap(penis, alph) << endl;
+	cout << "DEBUG: " << alphPos('А', "ru", isCap(penis, alph)) << endl;
 }
