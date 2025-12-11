@@ -43,47 +43,48 @@ bool isCap (wchar_t c, string alph){
 
 
 // takes character, alphabet and caps, then finds character position in the specified alphabet
-int alphPos(wchar_t c, string alph, int cap){
+int alphPos(wchar_t c, string alph){
 	cout << "\n\t";
 	cout << "DEBUG: c - " << c << "\n\t";
 	cout << "DEBUG: alph - " << alph << "\n\t";
-	cout << "DEBUG: cap - " << cap << endl;
 	int pos = -1;
 	// check alph
-	if (alph == "en" && cap == 1){ // iterate trough cap en alphabet
+	if (alph == "en"){ // iterate trough cap en alphabet
 		for (int i = 0; i < capAlph_en.length(); i++){
-			if (c != capAlph_en[i]){
-				continue;
+			if (i == capAlph_en.length()-1 && c != capAlph_en[i]){
+				for (int b = 0; b < alph_en.length(); b++){
+					if (c != alph_en[b]){
+						continue;
+					}else if (c == alph_en[b]){
+						pos = b;
+						break;
+					}
+				}
 			}else if (c == capAlph_en[i]){
 				pos = i;
 				break;
-			}
-		}
-	}else if(alph == "en"){ // same as previous, but without caps
-		for (int i = 0; i < alph_en.length(); i++){
-			if (c != alph_en[i]){
+			}else if (c != capAlph_en[i]){
 				continue;
-			}else if (c == alph_en[i]){
-				pos = i;
-				break;
 			}
 		}
-	}else if (alph == "ru" && cap == 1){ // iterate trough cap ru alphabet
+	}
+
+	if (alph == "ru"){ // iterate trough cap ru alphabet
 		for (int i = 0; i < capAlph_ru.length(); i++){
-			if (c != capAlph_ru[i]){
-				continue;
+			if (i == capAlph_ru.length()-1 && c != capAlph_ru[i]){
+				for (int b = 0; b < alph_ru.length(); b++){
+					if (c != alph_ru[b]){
+						continue;
+					}else if (c == alph_ru[b]){
+						pos = b;
+						break;
+					}
+				}
 			}else if (c == capAlph_ru[i]){
 				pos = i;
 				break;
-			}
-		}
-	}else if(alph == "ru"){ // same as previous, but without caps
-		for (int i = 0; i < alph_ru.length(); i++){
-			if (c != alph_ru[i]){
+			}else if (c != capAlph_ru[i]){
 				continue;
-			}else if (c == alph_ru[i]){
-				pos = i;
-				break;
 			}
 		}
 	}
@@ -91,29 +92,31 @@ int alphPos(wchar_t c, string alph, int cap){
 }
 
 // // This shit takes the key and adjustes it to the lenght of string
-// void doKey(string c, string key){
-//     while (c.size() != key.size()){
-//         if (c.size() > key.size()){
-//             key += key;
-//         }else if(c.size() < key.size()){
-//             key.pop_back();
-//         }else {
-//             break;
-//         }
-//     }
-// }
+void doKey(wstring c, wstring& key){
+    while (c.length() != key.length()){
+        if (c.length() > key.length()){
+            key += key;
+        }else if(c.length() < key.length()){
+            key.pop_back();
+        }else {
+            break;
+        }
+    }
+}
 
 // // This shit takes the string and the key and encodes it
-// string encode(string word, string key){
-//     toLowerCase(word);
-//     toLowerCase(key);
-//     doKey(word, key);
-//     string enc;
-//     for (int i = 0; i < word.size(); i++){
-//         enc += ALPHABET[(alphPos(word[i]) + alphPos(key[i])) % 27];
-//     }
-//     return enc;
-// }
+wstring encode(wstring word, wstring key, string alph){
+    doKey(word, key);
+    wstring enc;
+	if (alph == "en"){
+		for (int i = 0; i < word.length(); i++){
+			if (isCap(word[i], alph)){
+				enc += capAlph_en[(alphPos(word[i], alph) + alphPos(key[i], alph)) % 27];
+			}
+		}
+	}
+    return enc;
+}
 
 // // This Shit takes encoded string and dekodes it
 // string decode(string word, string key){
@@ -155,9 +158,5 @@ int main(){
     wcin.imbue(locale());
     wcout.imbue(locale());
 
-	wchar_t penis = L'а';
-	string alph = "ru";
-	wcout << "\n" << penis << "\n";
-	wcout << isCap(penis, alph) << "\n";
-	wcout << alphPos(penis, alph, isCap(penis, alph)) << "\n";
+	cout << alphPos(L'б', "ru") << endl;
 }
