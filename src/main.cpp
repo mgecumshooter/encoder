@@ -4,20 +4,22 @@
 #include <sstream>
 #include <stack>
 #include <cmath>
+#include <locale>
+// #include <codecvt>
 // There's only standart library :sunglasses:
 using namespace std;
 
 // All English alphabet
-string alph_en = "abcdefghijklmnopqrstuvwxyz ";
-string capAlph_en = "ABCDEFGHIJKLMNOPQRSTUVWXYZ " ;
-string alph_ru = "абвгдежзтклмнопрстуфхйчшщыэюя ";
-string capAlph_ru = "АБВГДЕЖЗТКЛМНОПРСТУФХЙЧШЩЫЕЭЮЯ "; 
+wstring alph_en = L"abcdefghijklmnopqrstuvwxyz ";
+wstring capAlph_en = L"ABCDEFGHIJKLMNOPQRSTUVWXYZ " ;
+wstring alph_ru = L"абвгдежзтклмнопрстуфхйчшщыэюя ";
+wstring capAlph_ru = L"АБВГДЕЖЗТКЛМНОПРСТУФХЙЧШЩЫЕЭЮЯ ";
 
-bool isCap (char c, string alph){
+bool isCap (wchar_t c, string alph){
 	bool cap;
 	if (c != ' '){
 		if (alph == "en"){
-			for(char x: capAlph_en){
+			for(wchar_t x: capAlph_en){
 				if(c == x){
 					cap = true;
 					break;
@@ -26,7 +28,7 @@ bool isCap (char c, string alph){
 				}
 			}
 		}else if (alph == "ru"){
-			for(char x: capAlph_ru){
+			for(wchar_t x: capAlph_ru){
 				if(c == x){
 					cap = true;
 					break;
@@ -36,12 +38,12 @@ bool isCap (char c, string alph){
 			}
 		}
 	}
-	return cap;	
+	return cap;
 }
 
 
 // takes character, alphabet and caps, then finds character position in the specified alphabet
-int alphPos(char c, string alph, int cap){
+int alphPos(wchar_t c, string alph, int cap){
 	cout << "\n\t";
 	cout << "DEBUG: c - " << c << "\n\t";
 	cout << "DEBUG: alph - " << alph << "\n\t";
@@ -147,33 +149,15 @@ int alphPos(char c, string alph, int cap){
 //     }
 // }
 
-// This shit doeas the main shit. shit.
-int main(/*int argc, char *argv[]*/){
-    // String of all possible arguments
-    // string argus[] = {"-e", "-d", "-h"};
-    // // Parsing the arguments
-    // if (argc > 1){
-    //     if (argv[1] == argus[0]){
-    //         string word;
-    //         string key;
-    //         string c;
-    //         getline(cin, word);
-    //         getline(cin, key);
-    //         stringstream ss(word);
-    //         while(getline(ss, c, ' ')){
+// This shit does the main shit. shit.
+int main(){
+	locale::global(locale("en_US.UTF-8"));
+    wcin.imbue(locale());
+    wcout.imbue(locale());
 
-    //         }
-    //     }else if (argv[1] == argus[1]){
-    //         cout << decode(argv[2], argv[3]);
-    //     }else if (argv[1] == argus[2]){
-    //         cout << "Usage ./exec [-h,-e,-d] \"string\" \"key\"\n./exec -e \"string\" \"key\" - encode sting with key\n./exec -d \"string\" \"key\" - decode string using key\n./exec -h - show this help and exit";
-    //     }
-    // }else {
-    //     cout << "Invalid argument! use ./exec -h to see usage";
-    // }
-	char penis;
-	string alph;
-	cin >> penis >> alph;
-	cout << "DEBUG: " << isCap(penis, alph) << endl;
-	cout << "DEBUG: " << alphPos('А', "ru", isCap(penis, alph)) << endl;
+	wchar_t penis = L'а';
+	string alph = "ru";
+	wcout << "\n" << penis << "\n";
+	wcout << isCap(penis, alph) << "\n";
+	wcout << alphPos(penis, alph, isCap(penis, alph)) << "\n";
 }
