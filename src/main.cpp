@@ -12,8 +12,8 @@ using namespace std;
 // All English alphabet
 wstring alph_en = L"abcdefghijklmnopqrstuvwxyz ";
 wstring capAlph_en = L"ABCDEFGHIJKLMNOPQRSTUVWXYZ " ;
-wstring alph_ru = L"абвгдежзтклмнопрстуфхйчшщыэюя ";
-wstring capAlph_ru = L"АБВГДЕЖЗТКЛМНОПРСТУФХЙЧШЩЫЕЭЮЯ ";
+wstring alph_ru = L"абвгдежзийклмнопрстуфхцчшщъыьэюя ";
+wstring capAlph_ru = L"АБВГДЕЖЗИЙКЛМНОПРСТУФХЦЧШЩЪЫЬЭЮЯ ";
 
 bool isCap (wchar_t c, string alph){
 	bool cap;
@@ -37,6 +37,8 @@ bool isCap (wchar_t c, string alph){
 				}
 			}
 		}
+	}else {
+		cap = false;
 	}
 	return cap;
 }
@@ -44,9 +46,6 @@ bool isCap (wchar_t c, string alph){
 
 // takes character, alphabet and caps, then finds character position in the specified alphabet
 int alphPos(wchar_t c, string alph){
-	cout << "\n\t";
-	cout << "DEBUG: c - " << c << "\n\t";
-	cout << "DEBUG: alph - " << alph << "\n\t";
 	int pos = -1;
 	// check alph
 	if (alph == "en"){ // iterate trough cap en alphabet
@@ -108,14 +107,66 @@ void doKey(wstring c, wstring& key){
 wstring encode(wstring word, wstring key, string alph){
     doKey(word, key);
     wstring enc;
+	wcout << "\n\t" << word << "\n";
+	wcout << "\n\t" << key << "\n";
+	cout << "\n\t" << alph << "\n";
 	if (alph == "en"){
 		for (int i = 0; i < word.length(); i++){
 			if (isCap(word[i], alph)){
 				enc += capAlph_en[(alphPos(word[i], alph) + alphPos(key[i], alph)) % 27];
+			}else if (!isCap(word[i], alph)){
+				enc += alph_en[(alphPos(word[i], alph) + alphPos(key[i], alph)) % 27];
+			}
+		}
+	}else if (alph == "ru"){
+		for (int i = 0; i <= word.length(); i++){
+			if (isCap(word[i], alph) == true){
+				enc += capAlph_ru[(alphPos(word[i], alph) + alphPos(key[i], alph)) % 33];
+			}else if (isCap(word[i], alph) == false){
+				enc += alph_ru[(alphPos(word[i], alph) + alphPos(key[i], alph)) % 33];
 			}
 		}
 	}
     return enc;
+}
+
+wstring decode(wstring word, wstring key, string alph){
+    doKey(word, key);
+    wstring dec;
+	if (alph == "en"){
+		for (int i = 0; i != word.length(); i++){
+			if (alphPos(word[i], alph) >= alphPos(key[i], alph)){
+				if (isCap(word[i], alph)){
+					dec += capAlph_en[(alphPos(word[i], alph) - alphPos(key[i], alph)) % 27];
+				}else if (!isCap(word[i], alph)){
+					dec += alph_en[(alphPos(word[i], alph) - alphPos(key[i], alph)) % 27];
+				}
+			}else {
+				if (isCap(word[i], alph)){
+					dec += capAlph_en[(27 - alphPos(word[i], alph) - alphPos(key[i], alph)) % 27];
+				}else if (!isCap(word[i], alph)){
+					dec += alph_en[(27 - alphPos(word[i], alph) - alphPos(key[i], alph)) % 27];
+				}
+			}
+		}
+	}else if (alph == "ru"){
+		for (int i = 0; i != word.length(); i++){
+			if (alphPos(word[i], alph) >= alphPos(key[i], alph)){
+				if (isCap(word[i], alph) == true){
+					dec += capAlph_ru[(alphPos(word[i], alph) - alphPos(key[i], alph)) % 33];
+				}else if (isCap(word[i], alph) == false){
+					dec += alph_ru[(alphPos(word[i], alph) - alphPos(key[i], alph)) % 33];
+				}
+			}else {
+				if (isCap(word[i], alph) == true){
+					dec += capAlph_ru[(33 - alphPos(word[i], alph) - alphPos(key[i], alph)) % 33];
+				}else if (isCap(word[i], alph) == false){
+					dec += alph_ru[(33 - alphPos(word[i], alph) - alphPos(key[i], alph)) % 33];
+				}
+			}
+		}
+	}
+    return dec;
 }
 
 // // This Shit takes encoded string and dekodes it
@@ -154,9 +205,14 @@ wstring encode(wstring word, wstring key, string alph){
 
 // This shit does the main shit. shit.
 int main(){
-	locale::global(locale("en_US.UTF-8"));
+	locale::global(locale("ru_RU.UTF-8"));
     wcin.imbue(locale());
     wcout.imbue(locale());
 
-	cout << alphPos(L'б', "ru") << endl;
+	string alphb = "ru";
+	wstring word = L"пенис";
+	wstring key = L"хуй";
+	wstring penis = encode(word, key, alphb);
+	wcout << encode(word, key, alphb) << endl;
+	wcout << decode(penis , key, alphb) << endl;
 }
