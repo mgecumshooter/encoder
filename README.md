@@ -1,9 +1,11 @@
-### ENCODER/DECODER
+# ENCODER/DECODER
 Very basic Vigener encoder writen in c++
 
-# WARNING: Currently, there is no releases, nor just compiled binaries. Build it on your own risk, or wait until first release (<= 20.12.2025)
+## WARNING
 
-# USAGE:
+Currently, there is no releases, nor just compiled binaries. Build it on your own risk, or wait until first release (<= 20.12.2025)
+
+### USAGE:
   run compiled binary in your terminal, all others intuitively clear in this CLI.
   just going to inform some warnings/tips:
   
